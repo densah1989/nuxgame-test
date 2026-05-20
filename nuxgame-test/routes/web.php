@@ -5,7 +5,7 @@ use App\Http\Controllers\RollController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => view('welcome'))->name('home');
+Route::get('/', fn() => view('home'))->name('home');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 
 Route::prefix('pages/{route}')->group(function () {

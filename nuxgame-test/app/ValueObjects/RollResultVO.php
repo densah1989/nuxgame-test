@@ -9,7 +9,6 @@ class RollResultVO
         private readonly bool $isWin,
         private readonly int $prize,
     ) {
-
     }
 
     public function getNumber(): int

@@ -8,7 +8,6 @@ use App\DTOs\UserDTO;
 use App\Http\Requests\RegisterRequest;
 use App\Services\PageService;
 use App\Services\UserService;
-use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -18,7 +17,7 @@ class UserController extends Controller
     ) {
     }
 
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request): \Illuminate\Http\RedirectResponse
     {
         $user = $this->userService->register(
             UserDTO::fromRequest($request)
@@ -26,8 +25,6 @@ class UserController extends Controller
 
         $page = $this->pageService->generatePage(user: $user);
 
-        return response()->json([
-            'route' => $page->route,
-        ], 201);
+        return redirect()->route('pages.show', $page->route);
     }
 }

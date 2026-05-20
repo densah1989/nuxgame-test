@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\DTOs\RollDTO;
 use App\Models\User;
 use App\Repositories\RollRepository;
 use App\ValueObjects\RollResultVO;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class RollService
@@ -18,6 +20,14 @@ class RollService
     {
         $randomNumber = rand(1, 1000);
 
+        $this->rollRepository->create(
+            new RollDTO(
+                userId: $user->id,
+                number: $randomNumber,
+                createdAt: new Carbon,
+            )
+        );
+
         return new RollResultVO(
             number: $randomNumber,
             isWin: $this->isWin($randomNumber),
@@ -25,7 +35,7 @@ class RollService
         );
     }
 
-    private function calculatePrize(int $win): int
+    public function calculatePrize(int $win): int
     {
         if ($win > 900) {
             return (int)round($win * 0.7);
@@ -42,7 +52,7 @@ class RollService
         return (int)round($win * 0.1);
     }
 
-    private function isWin(int $win): bool
+    public function isWin(int $win): bool
     {
         return $win % 2 === 0;
     }

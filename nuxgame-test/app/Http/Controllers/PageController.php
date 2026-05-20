@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Services\PageService;
 use Exception;
-use Illuminate\Http\JsonResponse;
 
 class PageController extends Controller
 {
@@ -15,56 +14,42 @@ class PageController extends Controller
     ) {
     }
 
-    public function show(string $route): JsonResponse
+    public function show(string $route): \Illuminate\View\View
     {
         $page = $this->pageService->getPage($route);
 
-        if (!$page) {
-            return response()->json([
-                'message' => 'Page not found',
-            ], 404);
-        }
+        abort_if(!$page || !$page->isActive(), 404, 'Page not found');
 
-        return response()->json([
-            'page' => $page,
-        ], 201);
+        return view('pages.show', [
+            'userPage' => $page,
+        ]);
     }
 
     /**
      * @throws Exception
      */
-    public function regenerate(string $route): JsonResponse
+    public function regenerate(string $route): \Illuminate\Http\RedirectResponse
     {
         $page = $this->pageService->getPage($route);
 
-        if (!$page) {
-            return response()->json([
-                'message' => 'Page not found',
-            ], 404);
-        }
+        abort_if(!$page, 404, 'Page not found');
 
         $regeneratedPage = $this->pageService->regenerateRoute($page);
 
-        return response()->json([
-            'page' => $regeneratedPage,
-        ], 201);
+        return redirect()->route('pages.show', $regeneratedPage->route);
     }
 
     /**
      * @throws Exception
      */
-    public function deactivate(string $route): JsonResponse
+    public function deactivate(string $route): \Illuminate\Http\RedirectResponse
     {
         $page = $this->pageService->getPage($route);
 
-        if (!$page) {
-            return response()->json([
-                'message' => 'Page not found',
-            ], 404);
-        }
+        abort_if(!$page, 404, 'Page not found');
 
-        return response()->json([
-            'success' => $this->pageService->deactivateRoute($page),
-        ], 201);
+        $this->pageService->deactivateRoute($page);
+
+        return redirect()->route('home');
     }
 }
