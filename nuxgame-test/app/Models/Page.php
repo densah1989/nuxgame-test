@@ -28,8 +28,17 @@ class Page extends Model
 
     protected $table = 'pages';
 
+    protected $casts = [
+        'expires_at' => 'datetime',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function isActive(): bool
+    {
+        return !$this->trashed() && $this->expires_at->isFuture();
     }
 }
