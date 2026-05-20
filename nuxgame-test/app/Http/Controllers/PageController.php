@@ -4,12 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatePaymentRequest;
-use App\Http\Requests\RegisterRequest;
-use App\PaymentProviders\DTOs\CreatePaymentDTO;
 use App\Services\PageService;
-use App\Services\PaymentService;
-use App\Services\UserService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class PageController extends Controller
@@ -21,46 +17,54 @@ class PageController extends Controller
 
     public function show(string $route): JsonResponse
     {
-        $payment = $this->userService->create(
-            CreatePaymentDTO::fromRequest($request)
-        );
+        $page = $this->pageService->getPage($route);
+
+        if (!$page) {
+            return response()->json([
+                'message' => 'Page not found',
+            ], 404);
+        }
 
         return response()->json([
-            'id' => $payment->id,
-            'provider' => $payment->provider,
-            'external_id' => $payment->external_id,
-            'status' => $payment->status,
-            'payment_url' => $payment->payment_url,
+            'page' => $page,
         ], 201);
     }
 
+    /**
+     * @throws Exception
+     */
     public function regenerate(string $route): JsonResponse
     {
-        $payment = $this->userService->create(
-            CreatePaymentDTO::fromRequest($request)
-        );
+        $page = $this->pageService->getPage($route);
+
+        if (!$page) {
+            return response()->json([
+                'message' => 'Page not found',
+            ], 404);
+        }
+
+        $regeneratedPage = $this->pageService->regenerateRoute($page);
 
         return response()->json([
-            'id' => $payment->id,
-            'provider' => $payment->provider,
-            'external_id' => $payment->external_id,
-            'status' => $payment->status,
-            'payment_url' => $payment->payment_url,
+            'page' => $regeneratedPage,
         ], 201);
     }
 
+    /**
+     * @throws Exception
+     */
     public function deactivate(string $route): JsonResponse
     {
-        $payment = $this->userService->create(
-            CreatePaymentDTO::fromRequest($request)
-        );
+        $page = $this->pageService->getPage($route);
+
+        if (!$page) {
+            return response()->json([
+                'message' => 'Page not found',
+            ], 404);
+        }
 
         return response()->json([
-            'id' => $payment->id,
-            'provider' => $payment->provider,
-            'external_id' => $payment->external_id,
-            'status' => $payment->status,
-            'payment_url' => $payment->payment_url,
+            'success' => $this->pageService->deactivateRoute($page),
         ], 201);
     }
 }
