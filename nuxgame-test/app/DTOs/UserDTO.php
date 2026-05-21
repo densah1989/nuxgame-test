@@ -2,7 +2,6 @@
 
 namespace App\DTOs;
 
-use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\RegisterRequest;
 use Carbon\Carbon;
 
@@ -11,8 +10,8 @@ class UserDTO
     public function __construct(
         private readonly string $username,
         private readonly string $phoneNumber,
-        private readonly Carbon $createdAt,
-        private readonly Carbon $updatedAt,
+        private readonly ?Carbon $createdAt = new Carbon,
+        private readonly ?Carbon $updatedAt = new Carbon,
     ) {
     }
 

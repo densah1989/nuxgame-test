@@ -35,21 +35,25 @@ class RollService
         );
     }
 
-    public function calculatePrize(int $win): int
+    public function calculatePrize(int $win): float
     {
+        if (!$this->isWin($win)) {
+            return 0.0;
+        }
+
         if ($win > 900) {
-            return (int)round($win * 0.7);
+            return round($win * 0.7, 2);
         }
 
         if ($win > 600) {
-            return (int)round($win * 0.5);
+            return round($win * 0.5, 2);
         }
 
         if ($win > 300) {
-            return (int)round($win * 0.3);
+            return round($win * 0.3, 2);
         }
 
-        return (int)round($win * 0.1);
+        return round($win * 0.1, 2);
     }
 
     public function isWin(int $win): bool
