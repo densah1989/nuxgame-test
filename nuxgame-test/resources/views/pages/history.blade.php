@@ -26,18 +26,10 @@
             margin-bottom: 0.25rem;
         }
 
-        .history-sub {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
+        .history-sub { color: var(--text-muted); font-size: 0.875rem; }
 
         /* ── Roll item ── */
-        .roll-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
+        .roll-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
 
         .roll-item {
             align-items: center;
@@ -50,9 +42,7 @@
             transition: border-color 0.2s;
         }
 
-        .roll-item:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-        }
+        .roll-item:hover { border-color: rgba(255,255,255,0.12); }
 
         .roll-number-badge {
             align-items: center;
@@ -67,19 +57,10 @@
             width: 52px;
         }
 
-        .roll-number-badge.win {
-            background: var(--win-glow);
-            color: var(--win);
-        }
+        .roll-number-badge.win  { background: var(--win-glow);  color: var(--win); }
+        .roll-number-badge.lose { background: var(--lose-glow); color: var(--lose); }
 
-        .roll-number-badge.lose {
-            background: var(--lose-glow);
-            color: var(--lose);
-        }
-
-        .roll-info {
-            flex: 1;
-        }
+        .roll-info { flex: 1; }
 
         .roll-result-row {
             align-items: center;
@@ -94,9 +75,7 @@
             font-weight: 500;
         }
 
-        .roll-prize-zero {
-            color: var(--text-muted);
-        }
+        .roll-prize-zero { color: var(--text-muted); }
 
         .roll-date {
             color: var(--text-muted);
@@ -120,10 +99,7 @@
             text-align: center;
         }
 
-        .empty-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
+        .empty-icon { font-size: 2rem; margin-bottom: 0.75rem; }
     </style>
 @endpush
 
@@ -156,7 +132,7 @@
                                     {{ $roll['win'] ? 'Win' : 'Lose' }}
                                 </span>
                                     @if($roll['win'])
-                                        <span class="roll-prize">+{{ $roll['prize'] }}</span>
+                                        <span class="roll-prize">+{{ number_format($roll['prize'], 2) }}</span>
                                     @else
                                         <span class="roll-prize-zero">No prize</span>
                                     @endif
@@ -172,8 +148,7 @@
             @endif
 
             <div class="fade-up" style="text-align:center">
-                <a class="btn btn-ghost" href="{{ url()->previous() }}"
-                   style="display:inline-flex;width:auto;padding:0.75rem 2rem">
+                <a class="btn btn-ghost" href="{{ url()->previous() }}" style="display:inline-flex;width:auto;padding:0.75rem 2rem">
                     ← Back to my page
                 </a>
             </div>
