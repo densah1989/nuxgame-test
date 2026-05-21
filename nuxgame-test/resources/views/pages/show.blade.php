@@ -42,10 +42,7 @@
             margin-bottom: 0.2rem;
         }
 
-        .page-meta {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
+        .page-meta { color: var(--text-muted); font-size: 0.875rem; }
 
         /* ── Link box ── */
         .link-box {
@@ -82,10 +79,7 @@
             white-space: nowrap;
         }
 
-        .copy-btn:hover {
-            border-color: var(--gold-dim);
-            color: var(--gold);
-        }
+        .copy-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
 
         /* ── Expiry ── */
         .expiry {
@@ -126,7 +120,7 @@
             background: linear-gradient(135deg, var(--gold), #7a5520);
             border: none;
             border-radius: var(--radius);
-            box-shadow: 0 4px 32px rgba(201, 160, 106, 0.25);
+            box-shadow: 0 4px 32px rgba(201,160,106,0.25);
             color: #0a0608;
             cursor: pointer;
             font-family: var(--font-display);
@@ -143,28 +137,20 @@
         }
 
         .lucky-btn:hover {
-            box-shadow: 0 8px 48px rgba(201, 160, 106, 0.4);
+            box-shadow: 0 8px 48px rgba(201,160,106,0.4);
             transform: translateY(-1px);
         }
 
-        .lucky-btn:active {
-            transform: scale(0.98);
-        }
+        .lucky-btn:active { transform: scale(0.98); }
 
         .lucky-btn::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%);
         }
 
-        .lucky-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            opacity: 0.7;
-            text-transform: uppercase;
-        }
+        .lucky-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; opacity: 0.7; text-transform: uppercase; }
 
         .history-link {
             align-items: center;
@@ -178,9 +164,7 @@
             transition: color 0.2s;
         }
 
-        .history-link:hover {
-            color: var(--gold);
-        }
+        .history-link:hover { color: var(--gold); }
     </style>
 @endpush
 
@@ -192,7 +176,7 @@
             <div class="page-header fade-up">
                 <div class="avatar">{{ strtoupper(substr($userPage->user->username, 0, 1)) }}</div>
                 <h1 class="display page-greeting">Hello, {{ $userPage->user->username }}</h1>
-                <p class="page-meta">{{ $userPage->user->phonenumber }}</p>
+                <p class="page-meta">{{ $userPage->user->phone_number }}</p>
             </div>
 
             <div class="card card--glow fade-up fade-up-1">
@@ -243,7 +227,7 @@
                 </form>
 
                 <a class="history-link" href="{{ route('rolls.history', $userPage->route) }}">
-                    ◷ &nbsp;View last 3 results
+                    ◷ &nbsp;History
                 </a>
 
             </div>
@@ -258,10 +242,7 @@
                 const btn = document.querySelector('.copy-btn');
                 btn.textContent = 'Copied!';
                 btn.style.color = 'var(--win)';
-                setTimeout(() => {
-                    btn.textContent = 'Copy';
-                    btn.style.color = '';
-                }, 2000);
+                setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
             });
         }
     </script>
